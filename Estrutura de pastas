@@ -1,0 +1,13 @@
+pedrojuca-site/
+├─ index.html
+├─ style.css          (opcional; usamos Tailwind CDN no exemplo)
+├─ script.js          (opcional; scroll suave e pequenos toques)
+├─ assets/
+│  ├─ logo.svg        (coloque seu logo quando tiver)
+│  └─ foto-perfil.jpg (sua foto profissional)
+├─ pages/
+│  ├─ privacidade.html
+│  └─ disclaimers.html
+├─ README.md
+├─ LICENSE            (se usar MIT)
+└─ .gitignore
