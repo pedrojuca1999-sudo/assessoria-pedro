@@ -3,147 +3,218 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Pedro Juca — Assessoria de Investimentos</title>
-  <meta name="description" content="Assessoria de investimentos e planejamento financeiro pessoal e familiar. Fortaleza‑CE. AAI (ANCORD) e Especialista de Investimentos CEA (ANBIMA)." />
-  <link rel="icon" href="assets/logo.svg" />
+  <meta name="description" content="Planejamento financeiro pessoal e familiar com transparência e método. Atuação por meio de escritório parceiro.">
+
+  <link rel="icon" href="assets/logo-avin.svg" />
+  <!-- TailwindCSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tema usando o manual de cores fornecido -->
   <style>
     html { scroll-behavior: smooth; }
     .container { max-width: 1120px; }
+
+    /* Mapeamento:
+       color1 -> --brand
+       color2 -> --accent
+       color3 -> --brand-600 e --text
+       color4 -> --muted
+       color5 -> usado em detalhes/bordas leves
+    */
+    :root{
+      --brand: #32a9cc;      /* color1 */
+      --brand-600: #0d2c35;  /* color3 (hover/contraste) */
+      --accent: #94d2e4;     /* color2 */
+      --text: #0d2c35;       /* color3 */
+      --muted: #6d7a8d;      /* color4 */
+      --line: #bcc4cc;       /* color5 (bordas leves) */
+      --bg: #ffffff;
+      /* superfície clara derivada da paleta para seções */
+      --surface: #f6fbfd;    /* tom clarinho inspirado em color2 */
+    }
+
+    .btn-brand{ background: var(--brand); color:#fff; }
+    .btn-brand:hover{ background: var(--brand-600); }
+    .link-brand:hover{ color: var(--brand); }
+    .card{ background:#fff; border:1px solid var(--accent); border-radius:1rem; }
   </style>
 </head>
-<body class="antialiased text-slate-800 bg-white">
+
+<body class="antialiased text-[var(--text)] bg-[var(--bg)]">
+
   <!-- Navbar -->
-  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b" style="border-color: var(--line);">
     <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="#topo" class="flex items-center gap-2">
-        <img src="assets/logo.svg" alt="Logo Pedro Juca" class="h-8 w-8">
+      <a href="#topo" class="flex items-center gap-3">
+        <img src="assets/logo-avin.svg" alt="Logo do Escritório" class="h-8 w-auto">
         <span class="font-semibold">Pedro Juca</span>
       </a>
       <ul class="hidden md:flex items-center gap-6 text-sm">
-        <li><a href="#sobre" class="hover:text-slate-900">Sobre</a></li>
-        <li><a href="#servicos" class="hover:text-slate-900">Serviços</a></li>
-        <li><a href="#processo" class="hover:text-slate-900">Processo</a></li>
-        <li><a href="#credenciais" class="hover:text-slate-900">Credenciais</a></li>
-        <li><a href="#contato" class="hover:text-slate-900">Contato</a></li>
+        <li><a href="#sobre" class="link-brand">Sobre</a></li>
+        <li><a href="#servicos" class="link-brand">Serviços</a></li>
+        <li><a href="#processo" class="link-brand">Processo</a></li>
+        <li><a href="#credenciais" class="link-brand">Credenciais</a></li>
+        <li><a href="#contato" class="link-brand">Contato</a></li>
       </ul>
-      <a href="#contato" class="hidden md:inline-block px-4 py-2 bg-slate-900 text-white rounded-xl">Fale comigo</a>
+      <div class="hidden md:flex items-center gap-2">
+        <a href="#contato" class="px-4 py-2 rounded-xl btn-brand">Fale comigo</a>
+      </div>
     </nav>
   </header>
 
   <!-- Hero -->
-  <section id="topo" class="container mx-auto px-4 py-16 md:py-24">
-    <div class="grid md:grid-cols-2 gap-10 items-center">
+  <section id="topo" class="relative">
+    <!-- Forma decorativa leve -->
+    <svg class="absolute -z-10 -top-10 -right-10 w-[42vw] max-w-[520px] opacity-10"
+         viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg"
+         style="color: var(--brand)">
+      <path d="M40 260 L140 40 L240 260 Z" fill="currentColor"/>
+    </svg>
+
+    <div class="container mx-auto px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
       <div>
         <h1 class="text-3xl md:text-5xl font-bold leading-tight">
-          Planejamento financeiro claro, <span class="text-slate-500">com acompanhamento.</span>
+          Planejamento financeiro claro, <span class="text-[var(--muted)]">com acompanhamento.</span>
         </h1>
-        <p class="mt-4 text-slate-600">
-          Atendo pessoas e famílias na organização patrimonial e na construção de uma carteira adequada
-          ao perfil de risco e aos objetivos de vida. Atuação como Assessor de Investimentos vinculada a
-          escritório parceiro do BTG Pactual.
+        <p class="mt-4 text-[var(--muted)]">
+          Atendo pessoas e famílias na organização patrimonial e na construção de uma carteira
+          adequada ao perfil e aos objetivos de vida. Atuação como Assessor de Investimentos
+          por meio de escritório parceiro.
         </p>
-        <div class="mt-6 flex gap-3">
-          <a href="#contato" class="px-5 py-3 bg-slate-900 text-white rounded-xl">Começar agora</a>
-          <a href="#servicos" class="px-5 py-3 border border-slate-300 rounded-xl">Ver serviços</a>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="#contato" class="px-5 py-3 rounded-xl btn-brand">Começar agora</a>
+          <a href="#servicos" class="px-5 py-3 border rounded-xl" style="border-color: var(--accent);">Ver serviços</a>
         </div>
-        <p class="mt-3 text-xs text-slate-500">
-          *Leia os <a href="pages/disclaimers.html" class="underline">disclaimers</a> e a <a href="pages/privacidade.html" class="underline">política de privacidade</a>.
+        <p class="mt-3 text-xs text-[var(--muted)]">
+          *Leia os <a href="pages/disclaimers.html" class="underline">disclaimers</a> e a
+          <a href="pages/privacidade.html" class="underline">política de privacidade</a>.
         </p>
       </div>
+
       <div class="md:justify-self-end">
-        <img src="assets/foto-perfil.svg" alt="Foto de Perfil - Pedro Juca" class="w-full max-w-sm rounded-2xl shadow">
+        <img src="assets/foto-perfil.jpg" alt="Pedro Juca" class="w-full max-w-sm rounded-2xl shadow">
       </div>
     </div>
   </section>
 
   <!-- Sobre -->
-  <section id="sobre" class="bg-slate-50">
+  <section id="sobre" class="bg-[var(--surface)]">
     <div class="container mx-auto px-4 py-14">
-      <h2 class="text-2xl md:text-3xl font-semibold">Quem sou</h2>
-      <p class="mt-4 text-slate-700 max-w-3xl">
-        Sou <strong>Pedro Juca</strong>, assessor de investimentos em Fortaleza‑CE, com foco em planejamento financeiro
-        pessoal e familiar. Experiência em atendimento consultivo, análise e implementação de carteiras diversificadas,
-        priorizando educação financeira e decisões conscientes.
+      <h2 class="text-2xl md:text-3xl font-semibold" style="color: var(--brand);">Quem sou</h2>
+      <p class="mt-4 text-[var(--muted)] max-w-3xl">
+        Sou <strong>Pedro Juca</strong>, assessor de investimentos em Fortaleza-CE, com foco em
+        planejamento financeiro pessoal e familiar. Atendo de forma consultiva, priorizando
+        educação financeira, carteiras adequadas ao perfil e revisão contínua.
       </p>
-      <ul class="mt-6 grid md:grid-cols-3 gap-4 text-slate-700">
-        <li class="p-4 bg-white rounded-xl border">Atendimento consultivo 1:1</li>
-        <li class="p-4 bg-white rounded-xl border">Carteiras alinhadas ao perfil</li>
-        <li class="p-4 bg-white rounded-xl border">Revisões e acompanhamento</li>
+      <ul class="mt-6 grid md:grid-cols-3 gap-4">
+        <li class="p-4 card">Atendimento consultivo 1:1</li>
+        <li class="p-4 card">Carteiras alinhadas ao perfil</li>
+        <li class="p-4 card">Revisões e acompanhamento</li>
       </ul>
     </div>
   </section>
 
   <!-- Serviços -->
   <section id="servicos" class="container mx-auto px-4 py-14">
-    <h2 class="text-2xl md:text-3xl font-semibold">Como posso ajudar</h2>
+    <h2 class="text-2xl md:text-3xl font-semibold" style="color: var(--brand);">Como posso ajudar</h2>
     <div class="mt-6 grid md:grid-cols-3 gap-6">
-      <div class="p-6 rounded-2xl border">
+      <div class="p-6 card">
         <h3 class="font-semibold">Diagnóstico & Plano</h3>
-        <p class="mt-2 text-slate-600">Mapeamento de objetivos, fluxo de caixa, reserva e alocação recomendada.</p>
+        <p class="mt-2 text-[var(--muted)]">Mapeamento de objetivos, fluxo de caixa, reserva e alocação recomendada.</p>
       </div>
-      <div class="p-6 rounded-2xl border">
+      <div class="p-6 card">
         <h3 class="font-semibold">Implementação</h3>
-        <p class="mt-2 text-slate-600">Abertura/transferência, adequação de perfil e execução das recomendações.</p>
+        <p class="mt-2 text-[var(--muted)]">Abertura/transferência, adequação de perfil e execução com método.</p>
       </div>
-      <div class="p-6 rounded-2xl border">
+      <div class="p-6 card">
         <h3 class="font-semibold">Acompanhamento</h3>
-        <p class="mt-2 text-slate-600">Monitoramento, rebalanceamentos e revisões periódicas do plano.</p>
+        <p class="mt-2 text-[var(--muted)]">Monitoramento, rebalanceamentos e revisões periódicas do plano.</p>
       </div>
     </div>
   </section>
 
   <!-- Processo -->
-  <section id="processo" class="bg-slate-50">
+  <section id="processo" class="bg-[var(--surface)]">
     <div class="container mx-auto px-4 py-14">
-      <h2 class="text-2xl md:text-3xl font-semibold">Meu processo em 4 etapas</h2>
-      <ol class="mt-6 grid md:grid-cols-4 gap-6 text-slate-700">
-        <li class="p-5 bg-white rounded-2xl border"><span class="font-semibold">1) Conversa inicial</span><br/>Entendo objetivos e contexto.</li>
-        <li class="p-5 bg-white rounded-2xl border"><span class="font-semibold">2) Plano</span><br/>Estratégia e alocação adequadas ao perfil.</li>
-        <li class="p-5 bg-white rounded-2xl border"><span class="font-semibold">3) Execução</span><br/>Implementamos de forma gradual e consciente.</li>
-        <li class="p-5 bg-white rounded-2xl border"><span class="font-semibold">4) Acompanhamento</span><br/>Revisões e ajustes quando necessário.</li>
+      <h2 class="text-2xl md:text-3xl font-semibold" style="color: var(--brand);">Meu processo em 4 etapas</h2>
+      <ol class="mt-6 grid md:grid-cols-4 gap-6">
+        <li class="p-5 card"><span class="font-semibold">1) Conversa inicial</span><br/>Entendo objetivos e contexto.</li>
+        <li class="p-5 card"><span class="font-semibold">2) Plano</span><br/>Estratégia e alocação adequadas ao perfil.</li>
+        <li class="p-5 card"><span class="font-semibold">3) Execução</span><br/>Implementação gradual e consciente.</li>
+        <li class="p-5 card"><span class="font-semibold">4) Acompanhamento</span><br/>Revisões e ajustes quando necessário.</li>
       </ol>
+    </div>
+  </section>
+
+  <!-- Parceria -->
+  <section>
+    <div class="container mx-auto px-4 py-10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h2 class="text-xl md:text-2xl font-semibold" style="color: var(--brand);">Escritório parceiro</h2>
+          <p class="mt-2 text-[var(--muted)]">
+            Atuação por meio de escritório parceiro, observando políticas e conformidade aplicáveis.
+          </p>
+        </div>
+        <a href="https://avincorp.com.br/" target="_blank" rel="noopener"
+           class="flex items-center gap-3 px-4 py-3 rounded-xl border" style="border-color: var(--accent);">
+          <img src="assets/logo-avin.svg" alt="AVIN" class="h-10 w-auto">
+          <span class="text-sm">avincorp.com.br</span>
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- Credenciais -->
   <section id="credenciais" class="container mx-auto px-4 py-14">
-    <h2 class="text-2xl md:text-3xl font-semibold">Credenciais & Parcerias</h2>
-    <ul class="mt-6 grid md:grid-cols-3 gap-4 text-slate-700">
-      <li class="p-4 rounded-xl border bg-white">AAI — ANCORD</li>
-      <li class="p-4 rounded-xl border bg-white">Especialista de Investimentos CEA — ANBIMA</li>
-      <li class="p-4 rounded-xl border bg-white">Vinculado a escritório parceiro do BTG Pactual</li>
+    <h2 class="text-2xl md:text-3xl font-semibold" style="color: var(--brand);">Credenciais & Parcerias</h2>
+    <ul class="mt-6 grid md:grid-cols-3 gap-4">
+      <li class="p-4 card">AAI — ANCORD</li>
+      <li class="p-4 card">Especialista de Investimentos CEA — ANBIMA</li>
+      <li class="p-4 card">Vínculo a escritório parceiro</li>
     </ul>
-    <p class="mt-4 text-xs text-slate-500">*A divulgação deve observar normas e políticas de compliance.</p>
+    <p class="mt-4 text-xs" style="color: var(--muted);">*Divulgação sujeita às políticas de compliance aplicáveis.</p>
   </section>
 
   <!-- Depoimentos (placeholders) -->
-  <section class="bg-slate-50">
+  <section class="bg-[var(--surface)]">
     <div class="container mx-auto px-4 py-14">
-      <h2 class="text-2xl md:text-3xl font-semibold">O que clientes comentam</h2>
+      <h2 class="text-2xl md:text-3xl font-semibold" style="color: var(--brand);">O que clientes comentam</h2>
       <div class="mt-6 grid md:grid-cols-3 gap-6">
-        <blockquote class="p-6 rounded-2xl border bg-white"><em>“Comunicação clara e objetiva.”</em><br/><span class="text-sm text-slate-500">— Cliente A</span></blockquote>
-        <blockquote class="p-6 rounded-2xl border bg-white"><em>“Plano que fez sentido pra família.”</em><br/><span class="text-sm text-slate-500">— Cliente B</span></blockquote>
-        <blockquote class="p-6 rounded-2xl border bg-white"><em>“Acompanhamento que dá segurança.”</em><br/><span class="text-sm text-slate-500">— Cliente C</span></blockquote>
+        <blockquote class="p-6 card"><em>“Comunicação clara e objetiva.”</em><br/><span class="text-sm" style="color: var(--muted);">— Cliente A</span></blockquote>
+        <blockquote class="p-6 card"><em>“Plano que fez sentido pra família.”</em><br/><span class="text-sm" style="color: var(--muted);">— Cliente B</span></blockquote>
+        <blockquote class="p-6 card"><em>“Acompanhamento que dá segurança.”</em><br/><span class="text-sm" style="color: var(--muted);">— Cliente C</span></blockquote>
       </div>
     </div>
   </section>
 
   <!-- Contato -->
   <section id="contato" class="container mx-auto px-4 py-14">
-    <div class="rounded-2xl border p-8">
-      <h2 class="text-2xl md:text-3xl font-semibold">Vamos conversar?</h2>
-      <p class="mt-2 text-slate-600">Envie uma mensagem ou agende um horário.</p>
+    <div class="p-8 card">
+      <h2 class="text-2xl md:text-3xl font-semibold" style="color: var(--brand);">Vamos conversar?</h2>
+      <p class="mt-2" style="color: var(--muted);">Escolha a melhor forma de contato:</p>
       <div class="mt-6 flex flex-wrap gap-3">
-        <a href="mailto:seuemail@exemplo.com" class="px-5 py-3 bg-slate-900 text-white rounded-xl">Enviar e-mail</a>
-        <a href="https://www.linkedin.com/in/pedrojuca/" target="_blank" rel="noreferrer" class="px-5 py-3 border border-slate-300 rounded-xl">LinkedIn</a>
-        <a href="pages/disclaimers.html" class="px-5 py-3 border border-slate-300 rounded-xl">Disclaimers</a>
+        <a href="mailto:pedrojucaclima@hotmail.com" class="px-5 py-3 rounded-xl btn-brand">Enviar e-mail</a>
+        <a href="https://wa.me/5585981230606" target="_blank" rel="noreferrer"
+           class="px-5 py-3 border rounded-xl" style="border-color: var(--accent);">
+          WhatsApp: (85) 98123-0606
+        </a>
+        <a href="https://www.linkedin.com/in/pedrojuca/" target="_blank" rel="noreferrer"
+           class="px-5 py-3 border rounded-xl" style="border-color: var(--accent);">
+          LinkedIn
+        </a>
+        <a href="pages/disclaimers.html" class="px-5 py-3 border rounded-xl" style="border-color: var(--accent);">
+          Disclaimers
+        </a>
       </div>
     </div>
   </section>
 
-  <footer class="border-t border-slate-200">
-    <div class="container mx-auto px-4 py-8 text-sm text-slate-500">
+  <!-- Rodapé -->
+  <footer class="border-t" style="border-color: var(--line);">
+    <div class="container mx-auto px-4 py-8 text-sm" style="color: var(--muted);">
       © <span id="ano"></span> Pedro Juca — Assessoria de Investimentos •
       <a class="underline" href="pages/privacidade.html">Privacidade</a>
     </div>
