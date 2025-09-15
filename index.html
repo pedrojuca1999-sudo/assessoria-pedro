@@ -7,11 +7,11 @@
   <title>Pedro Juca — Assessoria de Investimentos</title>
   <meta name="description" content="Planejamento financeiro pessoal e familiar com transparência e método. Atuação por meio de escritório parceiro.">
 
-  <link rel="icon" href="assets/logo-avin.svg" />
+  <link rel="icon" type="image/png" href="assets/logo-avin.png" />
   <!-- TailwindCSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Tema usando o manual de cores fornecido -->
+  <!-- Tema usando o seu manual de cores -->
   <style>
     html { scroll-behavior: smooth; }
     .container { max-width: 1120px; }
@@ -21,7 +21,7 @@
        color2 -> --accent
        color3 -> --brand-600 e --text
        color4 -> --muted
-       color5 -> usado em detalhes/bordas leves
+       color5 -> --line (bordas leves)
     */
     :root{
       --brand: #32a9cc;      /* color1 */
@@ -29,16 +29,17 @@
       --accent: #94d2e4;     /* color2 */
       --text: #0d2c35;       /* color3 */
       --muted: #6d7a8d;      /* color4 */
-      --line: #bcc4cc;       /* color5 (bordas leves) */
+      --line: #bcc4cc;       /* color5 */
       --bg: #ffffff;
-      /* superfície clara derivada da paleta para seções */
-      --surface: #f6fbfd;    /* tom clarinho inspirado em color2 */
+      --surface: #f6fbfd;
     }
 
     .btn-brand{ background: var(--brand); color:#fff; }
     .btn-brand:hover{ background: var(--brand-600); }
     .link-brand:hover{ color: var(--brand); }
     .card{ background:#fff; border:1px solid var(--accent); border-radius:1rem; }
+    .btn-disabled{ opacity:.5; cursor:not-allowed; }
+    input::placeholder{ color:#9aa6b2; }
   </style>
 </head>
 
@@ -48,14 +49,14 @@
   <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b" style="border-color: var(--line);">
     <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
       <a href="#topo" class="flex items-center gap-3">
-        <img src="assets/logo-avin.svg" alt="Logo do Escritório" class="h-8 w-auto">
+        <img src="assets/logo-avin.png" alt="Logo do Escritório" class="h-8 w-auto">
         <span class="font-semibold">Pedro Juca</span>
       </a>
       <ul class="hidden md:flex items-center gap-6 text-sm">
         <li><a href="#sobre" class="link-brand">Sobre</a></li>
         <li><a href="#servicos" class="link-brand">Serviços</a></li>
         <li><a href="#processo" class="link-brand">Processo</a></li>
-        <li><a href="#credenciais" class="link-brand">Credenciais</a></li>
+        <li><a href="#simulador" class="link-brand">Simulador</a></li>
         <li><a href="#contato" class="link-brand">Contato</a></li>
       </ul>
       <div class="hidden md:flex items-center gap-2">
@@ -94,7 +95,7 @@
       </div>
 
       <div class="md:justify-self-end">
-        <img src="assets/foto-perfil.jpg" alt="Pedro Juca" class="w-full max-w-sm rounded-2xl shadow">
+        <img src="assets/foto-perfil.png" alt="Pedro Juca" class="w-full max-w-sm rounded-2xl shadow">
       </div>
     </div>
   </section>
@@ -160,35 +161,104 @@
         </div>
         <a href="https://avincorp.com.br/" target="_blank" rel="noopener"
            class="flex items-center gap-3 px-4 py-3 rounded-xl border" style="border-color: var(--accent);">
-          <img src="assets/logo-avin.svg" alt="AVIN" class="h-10 w-auto">
+          <img src="assets/logo-avin.png" alt="AVIN" class="h-10 w-auto">
           <span class="text-sm">avincorp.com.br</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Credenciais -->
-  <section id="credenciais" class="container mx-auto px-4 py-14">
-    <h2 class="text-2xl md:text-3xl font-semibold" style="color: var(--brand);">Credenciais & Parcerias</h2>
-    <ul class="mt-6 grid md:grid-cols-3 gap-4">
-      <li class="p-4 card">AAI — ANCORD</li>
-      <li class="p-4 card">Especialista de Investimentos CEA — ANBIMA</li>
-      <li class="p-4 card">Vínculo a escritório parceiro</li>
-    </ul>
-    <p class="mt-4 text-xs" style="color: var(--muted);">*Divulgação sujeita às políticas de compliance aplicáveis.</p>
-  </section>
-
-  <!-- Depoimentos (placeholders) -->
-  <section class="bg-[var(--surface)]">
+  <!-- ====================== SIMULADOR (Etapa 1) ====================== -->
+  <section id="simulador" class="bg-[var(--surface)]">
     <div class="container mx-auto px-4 py-14">
-      <h2 class="text-2xl md:text-3xl font-semibold" style="color: var(--brand);">O que clientes comentam</h2>
-      <div class="mt-6 grid md:grid-cols-3 gap-6">
-        <blockquote class="p-6 card"><em>“Comunicação clara e objetiva.”</em><br/><span class="text-sm" style="color: var(--muted);">— Cliente A</span></blockquote>
-        <blockquote class="p-6 card"><em>“Plano que fez sentido pra família.”</em><br/><span class="text-sm" style="color: var(--muted);">— Cliente B</span></blockquote>
-        <blockquote class="p-6 card"><em>“Acompanhamento que dá segurança.”</em><br/><span class="text-sm" style="color: var(--muted);">— Cliente C</span></blockquote>
+      <!-- Header Etapas -->
+      <div class="mb-6">
+        <p class="text-sm font-medium" style="color: var(--muted);">Etapa 1 de 3</p>
+        <div class="mt-2 h-1.5 bg-[var(--line)] rounded">
+          <div class="h-1.5 rounded" style="width: 33%; background: var(--brand);"></div>
+        </div>
+      </div>
+
+      <div class="p-6 md:p-8 bg-white rounded-2xl border" style="border-color: var(--line);">
+        <!-- PERGUNTA 1 -->
+        <h2 class="text-2xl md:text-3xl font-semibold">Qual valor você gostaria de investir?</h2>
+
+        <div class="mt-6 grid md:grid-cols-2 gap-8">
+          <!-- Investimento inicial -->
+          <div>
+            <label class="block text-sm" style="color: var(--muted);">Valor do investimento inicial</label>
+            <div class="mt-2 flex items-end gap-2 border-b-2 pb-1" style="border-color: var(--line);">
+              <span class="text-lg md:text-xl" style="color: var(--muted);">R$</span>
+              <input
+                id="valorInicial"
+                type="text"
+                inputmode="numeric"
+                class="w-full outline-none text-2xl md:text-3xl"
+                placeholder="0,00"
+                aria-label="Valor do investimento inicial">
+            </div>
+          </div>
+
+          <!-- Aportes mensais -->
+          <div>
+            <label class="block text-sm" style="color: var(--muted);">Valor das aplicações mensais</label>
+            <div class="mt-2 flex items-end gap-2 border-b-2 pb-1" style="border-color: var(--line);">
+              <span class="text-lg md:text-xl" style="color: var(--muted);">R$</span>
+              <input
+                id="valorMensal"
+                type="text"
+                inputmode="numeric"
+                class="w-full outline-none text-2xl md:text-3xl"
+                placeholder="0,00"
+                aria-label="Valor das aplicações mensais">
+            </div>
+          </div>
+        </div>
+
+        <!-- PERGUNTA 2 -->
+        <div class="mt-10">
+          <h3 class="text-xl md:text-2xl font-semibold">Por quanto tempo você gostaria de investir?</h3>
+          <div class="mt-2 flex items-center justify-between">
+            <span class="text-sm" style="color: var(--muted);">Duração do investimento</span>
+            <span id="rotuloDuracao" class="text-base md:text-lg font-medium">6 meses</span>
+          </div>
+
+          <!-- Slider -->
+          <div class="mt-4">
+            <input
+              id="sliderDuracao"
+              type="range"
+              min="0" max="30" step="1"
+              class="w-full"
+              aria-label="Duração do investimento (0 = 6 meses, 1..30 = anos)">
+            <div class="mt-2 text-xs" style="color: var(--muted);">
+              <span>0 = 6 meses • 1 = 1 ano • … • 30 = 30 anos</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ações -->
+        <div class="mt-10 flex items-center justify-between">
+          <button type="button" id="btnVoltar"
+                  class="px-5 py-2.5 rounded-xl border"
+                  style="border-color: var(--accent); color: var(--text);">
+            Voltar
+          </button>
+
+          <button type="button" id="btnAvancar"
+                  class="px-6 py-3 rounded-xl btn-brand btn-disabled"
+                  disabled>
+            Avançar
+          </button>
+        </div>
+
+        <p class="mt-4 text-xs" style="color: var(--muted);">
+          Seus dados desta etapa ficam salvos apenas neste dispositivo para concluir a simulação depois.
+        </p>
       </div>
     </div>
   </section>
+  <!-- ==================== FIM SIMULADOR ==================== -->
 
   <!-- Contato -->
   <section id="contato" class="container mx-auto px-4 py-14">
@@ -221,7 +291,90 @@
   </footer>
 
   <script>
+    // Ano do rodapé
     document.getElementById('ano').textContent = new Date().getFullYear();
+
+    // --------- Helpers de moeda BRL ----------
+    const formatoBRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+    function limparNaoDigitos(str){ return (str || '').replace(/[^\d]/g,''); }
+    function centavosParaNumero(cent){ return (cent || 0) / 100; }
+    function numeroParaCentavos(n){ return Math.round((n || 0) * 100); }
+    function formatarCampoMoeda(input){
+      const limpo = limparNaoDigitos(input.value);
+      const cent = parseInt(limpo || '0', 10);
+      input.dataset.centavos = String(cent);
+      input.value = formatoBRL.format(centavosParaNumero(cent)).replace('R$\u00A0',''); // sem prefixo 'R$ '
+      validar();
+    }
+    function lerCentavos(input){
+      return parseInt(input?.dataset?.centavos || '0', 10);
+    }
+
+    // --------- Slider de duração ----------
+    const slider = document.getElementById('sliderDuracao');
+    const rotulo = document.getElementById('rotuloDuracao');
+    function atualizarDuracao(){
+      const v = parseInt(slider.value, 10);
+      if(v === 0){
+        rotulo.textContent = '6 meses';
+      } else if (v === 1){
+        rotulo.textContent = '1 ano';
+      } else {
+        rotulo.textContent = v + ' anos';
+      }
+      validar();
+    }
+
+    // --------- Validação + avançar ----------
+    const inputInicial = document.getElementById('valorInicial');
+    const inputMensal  = document.getElementById('valorMensal');
+    const btnAvancar   = document.getElementById('btnAvancar');
+    const btnVoltar    = document.getElementById('btnVoltar');
+
+    function validar(){
+      const ini = lerCentavos(inputInicial);
+      const men = lerCentavos(inputMensal);
+      const valido = (ini > 0 || men > 0);
+      btnAvancar.disabled = !valido;
+      btnAvancar.classList.toggle('btn-disabled', !valido);
+    }
+
+    // Eventos de moeda
+    ['input','blur','change','keyup','paste'].forEach(evt=>{
+      inputInicial.addEventListener(evt, ()=>formatarCampoMoeda(inputInicial));
+      inputMensal .addEventListener(evt, ()=>formatarCampoMoeda(inputMensal ));
+    });
+
+    // Init valores default
+    inputInicial.value = '0,00'; inputInicial.dataset.centavos = '0';
+    inputMensal .value = '0,00'; inputMensal .dataset.centavos = '0';
+
+    // Slider
+    slider.value = 0; // 0 = 6 meses
+    atualizarDuracao();
+    slider.addEventListener('input', atualizarDuracao);
+
+    // Botões
+    btnVoltar.addEventListener('click', ()=>{ history.length > 1 ? history.back() : window.scrollTo({top:0, behavior:'smooth'}); });
+
+    btnAvancar.addEventListener('click', ()=>{
+      const iniCent = lerCentavos(inputInicial);
+      const menCent = lerCentavos(inputMensal);
+      const passo = parseInt(slider.value, 10);
+      const duracaoMeses = (passo === 0) ? 6 : passo * 12;
+
+      const payload = {
+        valorInicialCentavos: iniCent,
+        valorMensalCentavos:  menCent,
+        duracaoMeses
+      };
+      try{
+        localStorage.setItem('simulacaoStep1', JSON.stringify(payload));
+      }catch(e){ console.warn('Não foi possível salvar no localStorage', e); }
+
+      // Redireciona para a próxima etapa (a página será criada depois)
+      window.location.href = 'pages/simulador-etapa-2.html';
+    });
   </script>
 </body>
 </html>
