@@ -10,6 +10,8 @@
   <link rel="icon" type="image/png" href="assets/logo-avin.png" />
   <!-- TailwindCSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js para o gráfico -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Tema usando o seu manual de cores -->
   <style>
@@ -149,38 +151,19 @@
     </div>
   </section>
 
-  <!-- Parceria -->
-  <section>
-    <div class="container mx-auto px-4 py-10">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-        <div>
-          <h2 class="text-xl md:text-2xl font-semibold" style="color: var(--brand);">Escritório parceiro</h2>
-          <p class="mt-2 text-[var(--muted)]">
-            Atuação por meio de escritório parceiro, observando políticas e conformidade aplicáveis.
-          </p>
-        </div>
-        <a href="https://avincorp.com.br/" target="_blank" rel="noopener"
-           class="flex items-center gap-3 px-4 py-3 rounded-xl border" style="border-color: var(--accent);">
-          <img src="assets/logo-avin.png" alt="AVIN" class="h-10 w-auto">
-          <span class="text-sm">avincorp.com.br</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ====================== SIMULADOR (Etapa 1) ====================== -->
+  <!-- ====================== SIMULADOR (Etapas 1 e 2 no mesmo lugar) ====================== -->
   <section id="simulador" class="bg-[var(--surface)]">
     <div class="container mx-auto px-4 py-14">
-      <!-- Header Etapas -->
+      <!-- Cabeçalho de etapas -->
       <div class="mb-6">
-        <p class="text-sm font-medium" style="color: var(--muted);">Etapa 1 de 3</p>
+        <p id="etapaRotulo" class="text-sm font-medium" style="color: var(--muted);">Etapa 1 de 3</p>
         <div class="mt-2 h-1.5 bg-[var(--line)] rounded">
-          <div class="h-1.5 rounded" style="width: 33%; background: var(--brand);"></div>
+          <div id="etapaBarra" class="h-1.5 rounded" style="width: 33%; background: var(--brand);"></div>
         </div>
       </div>
 
-      <div class="p-6 md:p-8 bg-white rounded-2xl border" style="border-color: var(--line);">
-        <!-- PERGUNTA 1 -->
+      <!-- CARD DO FORM (ETAPA 1) -->
+      <div id="cardEtapa1" class="p-6 md:p-8 bg-white rounded-2xl border" style="border-color: var(--line);">
         <h2 class="text-2xl md:text-3xl font-semibold">Qual valor você gostaria de investir?</h2>
 
         <div class="mt-6 grid md:grid-cols-2 gap-8">
@@ -256,6 +239,51 @@
           Seus dados desta etapa ficam salvos apenas neste dispositivo para concluir a simulação depois.
         </p>
       </div>
+
+      <!-- CARD DO RESULTADO (ETAPA 2) -->
+      <div id="cardEtapa2" class="hidden p-4 md:p-6 bg-white rounded-2xl border" style="border-color: var(--line);">
+        <div class="grid lg:grid-cols-3 gap-6 items-stretch">
+          <!-- Gráfico -->
+          <div class="lg:col-span-2 p-4 md:p-6 rounded-xl" style="background:#f3f5f7;">
+            <canvas id="graficoSimulacao" height="220"></canvas>
+          </div>
+
+          <!-- Painel resumo -->
+          <aside class="p-4 md:p-6 rounded-xl border" style="border-color: var(--line);">
+            <p class="text-sm" style="color: var(--muted);">Ao final de</p>
+            <h3 id="resPrazo" class="text-3xl font-semibold" style="color: var(--brand);">—</h3>
+
+            <p class="mt-5 text-sm" style="color: var(--muted);">com um investimento inicial de</p>
+            <h4 id="resInicial" class="text-2xl font-semibold" style="color: var(--brand);">—</h4>
+
+            <p class="mt-5 text-sm" style="color: var(--muted);">e investindo mensalmente</p>
+            <h4 id="resMensal" class="text-2xl font-semibold" style="color: var(--brand);">—</h4>
+
+            <p class="mt-6 text-sm" style="color: var(--muted);">Você terá, no cenário esperado,</p>
+            <h4 id="resEsperado" class="text-2xl font-semibold" style="color: var(--brand);">—</h4>
+
+            <p class="mt-4 text-sm" style="color: var(--muted);">no cenário pessimista</p>
+            <h4 id="resPessimista" class="text-2xl font-semibold" style="color: var(--brand);">—</h4>
+
+            <p class="mt-4 text-sm" style="color: var(--muted);">e no cenário otimista</p>
+            <h4 id="resOtimista" class="text-2xl font-semibold" style="color: var(--brand);">—</h4>
+
+            <hr class="my-6" style="border-color: var(--line);">
+
+            <h5 class="font-semibold">Resumo</h5>
+            <ul class="mt-2 text-sm">
+              <li><span style="color: var(--muted);">Valor inicial:</span> <span id="resResumoInicial">—</span></li>
+              <li><span style="color: var(--muted);">Somatório de aportes:</span> <span id="resResumoAportes">—</span></li>
+              <li><span style="color: var(--muted);">Valor final (esperado):</span> <span id="resResumoFinal">—</span></li>
+            </ul>
+
+            <div class="mt-6 flex items-center gap-2">
+              <button id="btnEditar" class="px-4 py-2 rounded-xl border" style="border-color: var(--accent);">Editar valores</button>
+              <a href="#contato" class="px-4 py-2 rounded-xl btn-brand">Falar com Pedro</a>
+            </div>
+          </aside>
+        </div>
+      </div>
     </div>
   </section>
   <!-- ==================== FIM SIMULADOR ==================== -->
@@ -295,41 +323,33 @@
     document.getElementById('ano').textContent = new Date().getFullYear();
 
     // --------- Helpers de moeda BRL ----------
-    const formatoBRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+    const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+    const pct = v => (v*100).toFixed(2).replace('.',',')+'%';
     function limparNaoDigitos(str){ return (str || '').replace(/[^\d]/g,''); }
-    function centavosParaNumero(cent){ return (cent || 0) / 100; }
-    function numeroParaCentavos(n){ return Math.round((n || 0) * 100); }
     function formatarCampoMoeda(input){
       const limpo = limparNaoDigitos(input.value);
       const cent = parseInt(limpo || '0', 10);
       input.dataset.centavos = String(cent);
-      input.value = formatoBRL.format(centavosParaNumero(cent)).replace('R$\u00A0',''); // sem prefixo 'R$ '
+      input.value = BRL.format(cent/100).replace('R$ ',''); // sem prefixo 'R$ '
       validar();
     }
-    function lerCentavos(input){
-      return parseInt(input?.dataset?.centavos || '0', 10);
-    }
+    function lerCentavos(input){ return parseInt(input?.dataset?.centavos || '0', 10); }
 
     // --------- Slider de duração ----------
     const slider = document.getElementById('sliderDuracao');
     const rotulo = document.getElementById('rotuloDuracao');
     function atualizarDuracao(){
       const v = parseInt(slider.value, 10);
-      if(v === 0){
-        rotulo.textContent = '6 meses';
-      } else if (v === 1){
-        rotulo.textContent = '1 ano';
-      } else {
-        rotulo.textContent = v + ' anos';
-      }
+      rotulo.textContent = (v === 0) ? '6 meses' : (v === 1 ? '1 ano' : v + ' anos');
       validar();
     }
 
-    // --------- Validação + avançar ----------
+    // --------- Campos e botões ----------
     const inputInicial = document.getElementById('valorInicial');
     const inputMensal  = document.getElementById('valorMensal');
     const btnAvancar   = document.getElementById('btnAvancar');
     const btnVoltar    = document.getElementById('btnVoltar');
+    const btnEditar    = document.getElementById('btnEditar');
 
     function validar(){
       const ini = lerCentavos(inputInicial);
@@ -339,42 +359,216 @@
       btnAvancar.classList.toggle('btn-disabled', !valido);
     }
 
-    // Eventos de moeda
     ['input','blur','change','keyup','paste'].forEach(evt=>{
       inputInicial.addEventListener(evt, ()=>formatarCampoMoeda(inputInicial));
       inputMensal .addEventListener(evt, ()=>formatarCampoMoeda(inputMensal ));
     });
 
-    // Init valores default
-    inputInicial.value = '0,00'; inputInicial.dataset.centavos = '0';
-    inputMensal .value = '0,00'; inputMensal .dataset.centavos = '0';
-
-    // Slider
-    slider.value = 0; // 0 = 6 meses
+    inputInicial.value='0,00'; inputInicial.dataset.centavos='0';
+    inputMensal .value='0,00'; inputMensal .dataset.centavos='0';
+    slider.value = 0;
     atualizarDuracao();
     slider.addEventListener('input', atualizarDuracao);
 
-    // Botões
-    btnVoltar.addEventListener('click', ()=>{ history.length > 1 ? history.back() : window.scrollTo({top:0, behavior:'smooth'}); });
+    btnVoltar.addEventListener('click', ()=>{ history.length>1 ? history.back() : window.scrollTo({top:0, behavior:'smooth'}); });
 
+    // --------- Etapas (mostrar/ocultar) ----------
+    const etapaRotulo = document.getElementById('etapaRotulo');
+    const etapaBarra  = document.getElementById('etapaBarra');
+    const cardEtapa1  = document.getElementById('cardEtapa1');
+    const cardEtapa2  = document.getElementById('cardEtapa2');
+
+    function irParaEtapa2(){
+      etapaRotulo.textContent = 'Etapa 2 de 3';
+      etapaBarra.style.width = '66%';
+      cardEtapa1.classList.add('hidden');
+      cardEtapa2.classList.remove('hidden');
+      document.getElementById('simulador').scrollIntoView({behavior:'smooth'});
+    }
+
+    function voltarParaEtapa1(){
+      etapaRotulo.textContent = 'Etapa 1 de 3';
+      etapaBarra.style.width = '33%';
+      cardEtapa2.classList.add('hidden');
+      cardEtapa1.classList.remove('hidden');
+      document.getElementById('simulador').scrollIntoView({behavior:'smooth'});
+    }
+
+    if(btnEditar){ btnEditar.addEventListener('click', voltarParaEtapa1); }
+
+    // --------- API BCB (Selic) ----------
+    const FALLBACK_SELIC_ANUAL = 10.25; // % a.a. (ajuste manual se necessário)
+    async function buscarSelicVigente(){
+      try{
+        // Meta Selic (série SGS 432) - último valor
+        const url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados/ultimos/1?formato=json';
+        const r = await fetch(url, {cache:'no-store'});
+        const j = await r.json();
+        let v = j?.[0]?.valor;
+        if(typeof v === 'string'){ v = parseFloat(v.replace(',','.')); }
+        if(!Number.isFinite(v)) throw new Error('Valor inválido da API');
+        return v; // % a.a.
+      }catch(e){
+        console.warn('Falha ao buscar Selic na API BCB, usando fallback:', e);
+        return FALLBACK_SELIC_ANUAL;
+      }
+    }
+
+    // --------- Cálculo composto e série para o gráfico ----------
+    function mensalDeAnual(pctAnual){
+      const r = pctAnual/100;
+      return Math.pow(1+r, 1/12) - 1;
+    }
+
+    function simularSerie(iniCent, menCent, meses, taxaMensal){
+      // Retorna array de valores acumulados por mês (em centavos)
+      const serie = [];
+      let saldo = iniCent; // depósito inicial no t0
+      for(let m=1; m<=meses; m++){
+        // capitaliza o saldo
+        saldo = Math.round(saldo * (1 + taxaMensal));
+        // aporte no fim do mês
+        saldo += menCent;
+        serie.push(saldo);
+      }
+      return serie;
+    }
+
+    // --------- Montagem do gráfico ----------
+    let chart;
+    function desenharGrafico(labels, esperado, pess, otim){
+      const ctx = document.getElementById('graficoSimulacao').getContext('2d');
+      if(chart){ chart.destroy(); }
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: 'Cenário esperado',
+              data: esperado.map(v=>v/100),
+              borderColor: getComputedStyle(document.documentElement).getPropertyValue('--brand').trim(),
+              borderWidth: 3,
+              tension: 0.25
+            },
+            {
+              label: 'Pessimista',
+              data: pess.map(v=>v/100),
+              borderColor: '#6d7a8d', // muted
+              borderWidth: 2,
+              borderDash: [6,6],
+              tension: 0.25
+            },
+            {
+              label: 'Otimista',
+              data: otim.map(v=>v/100),
+              borderColor: '#94d2e4', // accent
+              borderWidth: 2,
+              borderDash: [4,6],
+              tension: 0.25
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              ticks: {
+                callback: (val)=> {
+                  // mostra em "mil" quando grande
+                  if(val>=1000) return Math.round(val/1000)+' mil';
+                  return BRL.format(val).replace('R$','').trim();
+                }
+              },
+              grid: { color: 'rgba(0,0,0,0.06)' }
+            },
+            x: {
+              ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 7 },
+              grid: { display: false }
+            }
+          },
+          plugins: {
+            legend: { display: true, position: 'bottom' },
+            tooltip: {
+              callbacks: {
+                label: (ctx)=> ' '+ctx.dataset.label+': '+BRL.format(ctx.parsed.y)
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // --------- Utilidades de rótulos de tempo ----------
+    function gerarLabelsMeses(meses){
+      const hoje = new Date();
+      const labels = [];
+      for(let i=1;i<=meses;i++){
+        const d = new Date(hoje.getFullYear(), hoje.getMonth()+i, 1);
+        labels.push(d.getFullYear().toString());
+      }
+      return labels;
+    }
+
+    // --------- Render da Etapa 2 ----------
+    async function calcularEExibirResultado(iniCent, menCent, meses){
+      const selicAA = await buscarSelicVigente();
+      const selicMensal = mensalDeAnual(selicAA);
+      const pessMensal  = mensalDeAnual(Math.max(selicAA - 2, 0));
+      const otimMensal  = mensalDeAnual(selicAA + 2);
+
+      const serieEsperada = simularSerie(iniCent, menCent, meses, selicMensal);
+      const seriePess     = simularSerie(iniCent, menCent, meses, pessMensal);
+      const serieOtim     = simularSerie(iniCent, menCent, meses, otimMensal);
+
+      const labels = gerarLabelsMeses(meses);
+
+      // Gráfico
+      desenharGrafico(labels, serieEsperada, seriePess, serieOtim);
+
+      // Resumo lateral
+      const prazoTexto = meses === 6 ? '6 meses' : (meses===12 ? '1 ano' : (meses%12===0 ? (meses/12)+' anos' : meses+' meses'));
+      document.getElementById('resPrazo').textContent = prazoTexto;
+      document.getElementById('resInicial').textContent = BRL.format(iniCent/100);
+      document.getElementById('resMensal').textContent  = BRL.format(menCent/100);
+      document.getElementById('resEsperado').textContent   = BRL.format(serieEsperada[serieEsperada.length-1]/100);
+      document.getElementById('resPessimista').textContent = BRL.format(seriePess[seriePess.length-1]/100);
+      document.getElementById('resOtimista').textContent   = BRL.format(serieOtim[serieOtim.length-1]/100);
+
+      const aportesTotal = menCent * meses;
+      document.getElementById('resResumoInicial').textContent = BRL.format(iniCent/100);
+      document.getElementById('resResumoAportes').textContent = BRL.format(aportesTotal/100);
+      document.getElementById('resResumoFinal').textContent   = BRL.format(serieEsperada[serieEsperada.length-1]/100);
+
+      irParaEtapa2();
+    }
+
+    // --------- Clique Avançar ----------
     btnAvancar.addEventListener('click', ()=>{
       const iniCent = lerCentavos(inputInicial);
       const menCent = lerCentavos(inputMensal);
       const passo = parseInt(slider.value, 10);
-      const duracaoMeses = (passo === 0) ? 6 : passo * 12;
+      const meses = (passo === 0) ? 6 : passo*12;
 
-      const payload = {
-        valorInicialCentavos: iniCent,
-        valorMensalCentavos:  menCent,
-        duracaoMeses
-      };
       try{
-        localStorage.setItem('simulacaoStep1', JSON.stringify(payload));
+        localStorage.setItem('simulacaoStep1', JSON.stringify({valorInicialCentavos:iniCent, valorMensalCentavos:menCent, duracaoMeses:meses}));
       }catch(e){ console.warn('Não foi possível salvar no localStorage', e); }
 
-      // Redireciona para a próxima etapa (a página será criada depois)
-      window.location.href = 'pages/simulador-etapa-2.html';
+      calcularEExibirResultado(iniCent, menCent, meses);
     });
+
+    // --------- Ao carregar, se já houver dados salvos, mostra direto a Etapa 2 ----------
+    (function initFromStorage(){
+      try{
+        const raw = localStorage.getItem('simulacaoStep1');
+        if(!raw) return;
+        const {valorInicialCentavos, valorMensalCentavos, duracaoMeses} = JSON.parse(raw);
+        if((valorInicialCentavos>0 || valorMensalCentavos>0) && duracaoMeses>0){
+          calcularEExibirResultado(valorInicialCentavos, valorMensalCentavos, duracaoMeses);
+        }
+      }catch(e){ /* ignore */ }
+    })();
   </script>
 </body>
 </html>
