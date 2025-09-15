@@ -21,7 +21,7 @@
     html { scroll-behavior: smooth; }
     .container { max-width: 1120px; }
 
-    /* Paleta oficial que você passou */
+    /* Paleta oficial */
     :root{
       --brand: #32a9cc;      /* color1 */
       --brand-600: #0d2c35;  /* color3 (hover/contraste) */
@@ -47,7 +47,7 @@
     #watermark {
       position: absolute;
       inset: 0;
-      display: none; /* só aparece na captura do PDF */
+      display: none; /* só aparece durante a captura do PDF */
       align-items: center; justify-content: center;
       pointer-events: none;
     }
@@ -157,7 +157,7 @@
   <section id="processo" class="bg-[var(--surface)]">
     <div class="container mx-auto px-4 py-14">
       <h2 class="text-2xl md:text-3xl font-semibold" style="color: var(--brand);">Meu processo em 4 etapas</h2>
-    <ol class="mt-6 grid md:grid-cols-4 gap-6">
+      <ol class="mt-6 grid md:grid-cols-4 gap-6">
         <li class="p-5 card"><span class="font-semibold">1) Conversa inicial</span><br/>Entendo objetivos e contexto.</li>
         <li class="p-5 card"><span class="font-semibold">2) Plano</span><br/>Estratégia e alocação adequadas ao perfil.</li>
         <li class="p-5 card"><span class="font-semibold">3) Execução</span><br/>Implementação gradual e consciente.</li>
@@ -313,6 +313,9 @@
   </footer>
 
   <script>
+    // ======== RESET AUTOMÁTICO AO ABRIR ========
+    try { localStorage.removeItem('simulacaoStep1'); } catch(e) {}
+
     // ======== Utilitários ========
     document.getElementById('ano').textContent = new Date().getFullYear();
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -369,6 +372,16 @@
     const cardEtapa2  = document.getElementById('cardEtapa2');
     function irParaEtapa2(){ etapaRotulo.textContent='Etapa 2 de 3'; etapaBarra.style.width='66%'; cardEtapa1.classList.add('hidden'); cardEtapa2.classList.remove('hidden'); document.getElementById('simulador').scrollIntoView({behavior:'smooth'}); }
     function voltarParaEtapa1(){ etapaRotulo.textContent='Etapa 1 de 3'; etapaBarra.style.width='33%'; cardEtapa2.classList.add('hidden'); cardEtapa1.classList.remove('hidden'); document.getElementById('simulador').scrollIntoView({behavior:'smooth'}); }
+
+    // Reset ao clicar "Simulador" no menu
+    const linkSimulador = document.querySelector('a[href="#simulador"]');
+    if (linkSimulador) {
+      linkSimulador.addEventListener('click', () => {
+        try { localStorage.removeItem('simulacaoStep1'); } catch(e) {}
+        voltarParaEtapa1();
+      });
+    }
+
     if(btnEditar){ btnEditar.addEventListener('click', voltarParaEtapa1); }
 
     // ======== Taxas (APIs BCB) ========
@@ -391,9 +404,8 @@
 
     async function buscarSelicAA(){ try{ return await fetchSGS(432); } catch(e){ console.warn('SELIC fallback', e); return FALLBACKS.SELIC_AA; } }
     // CDI público com CORS amigável é raro; usamos fallback=SELIC
-    async function buscarCDIAA(){ 
+    async function buscarCDIAA(){
       try{
-        // se você tiver um endpoint do CDI, troque aqui
         if(FALLBACKS.CDI_AA !== null) return FALLBACKS.CDI_AA;
         return await buscarSelicAA();
       }catch(e){ return await buscarSelicAA(); }
@@ -441,16 +453,24 @@
     let chart;
     function desenharGrafico(labels, esperado, cdi, poup, ipca){
       const ctx = document.getElementById('graficoSimulacao').getContext('2d');
+
+      // pegar as cores das CSS variables
+      const css = getComputedStyle(document.documentElement);
+      const corSelic = css.getPropertyValue('--brand').trim();
+      const corCDI   = css.getPropertyValue('--purple').trim();
+      const corPoup  = css.getPropertyValue('--teal').trim();
+      const corIPCA  = css.getPropertyValue('--red-soft').trim();
+
       if(chart) chart.destroy();
       chart = new Chart(ctx, {
         type: 'line',
         data: {
           labels,
           datasets: [
-            { label: 'Cenário esperado (Selic)', data: esperado.map(v=>v/100), borderColor: getComputedStyle(document.documentElement).getPropertyValue('--brand').trim(), borderWidth: 3, tension: 0.25 },
-            { label: 'CDI', data: cdi.map(v=>v/100), borderColor: 'var(--purple)', borderWidth: 2, borderDash: [6,6], tension: 0.25 },
-            { label: 'Poupança', data: poup.map(v=>v/100), borderColor: 'var(--teal)', borderWidth: 2, borderDash: [6,6], tension: 0.25 },
-            { label: 'IPCA (projetado)', data: ipca.map(v=>v/100), borderColor: getComputedStyle(document.documentElement).getPropertyValue('--red-soft').trim(), borderWidth: 2, borderDash: [4,6], tension: 0.25 }
+            { label: 'Cenário esperado (Selic)', data: esperado.map(v=>v/100), borderColor: corSelic, borderWidth: 3, tension: 0.25 },
+            { label: 'CDI', data: cdi.map(v=>v/100), borderColor: corCDI, borderWidth: 2, borderDash: [6,6], tension: 0.25 },
+            { label: 'Poupança', data: poup.map(v=>v/100), borderColor: corPoup, borderWidth: 2, borderDash: [6,6], tension: 0.25 },
+            { label: 'IPCA (projetado)', data: ipca.map(v=>v/100), borderColor: corIPCA, borderWidth: 2, borderDash: [4,6], tension: 0.25 }
           ]
         },
         options: {
@@ -519,18 +539,6 @@
       try{ localStorage.setItem('simulacaoStep1', JSON.stringify({valorInicialCentavos:iniCent, valorMensalCentavos:menCent, duracaoMeses:meses})); }catch(e){}
       calcularEExibirResultado(iniCent, menCent, meses);
     });
-
-    // Se houver dados salvos, mostra direto
-    (function restore(){
-      try{
-        const raw = localStorage.getItem('simulacaoStep1');
-        if(!raw) return;
-        const {valorInicialCentavos, valorMensalCentavos, duracaoMeses} = JSON.parse(raw);
-        if((valorInicialCentavos>0 || valorMensalCentavos>0) && duracaoMeses>0){
-          calcularEExibirResultado(valorInicialCentavos, valorMensalCentavos, duracaoMeses);
-        }
-      }catch(e){}
-    })();
 
     // Exportar PDF com marca d'água
     if(btnExportar){
