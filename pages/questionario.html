@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Questionário — Perfil do Investidor | Pedro Juca</title>
+  <meta name="description" content="Questionário de suitability para análise de perfil do investidor.">
+
+  <link rel="icon" type="image/png" href="../assets/logo-avin.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+  <style>
+    :root{
+      --brand:#32a9cc; --brand-600:#0d2c35; --accent:#94d2e4;
+      --text:#0d2c35; --muted:#6d7a8d; --line:#bcc4cc; --surface:#f6fbfd;
+    }
+    .container{ max-width: 960px; }
+    .btn-brand{ background:var(--brand); color:#fff; }
+    .btn-brand:hover{ background:var(--brand-600); }
+    .card{ background:#fff; border:1px solid var(--accent); border-radius:1rem; }
+    textarea{ resize:vertical; }
+    #watermark{ position:absolute; inset:0; display:none; align-items:center; justify-content:center; pointer-events:none;}
+    #watermark span{ font:700 32px/1.2 system-ui; color:rgba(13,44,53,.08); transform:rotate(-25deg); letter-spacing:2px; text-transform:uppercase; }
+  </style>
+</head>
+
+<body class="antialiased text-[var(--text)] bg-[var(--surface)]">
+  <!-- Topbar -->
+  <header class="bg-white border-b" style="border-color:var(--line);">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-3">
+        <img src="../assets/logo-avin.png" alt="Logo" class="h-8 w-auto">
+        <span class="font-semibold">Pedro Juca</span>
+      </a>
+      <div class="flex gap-2">
+        <a href="../index.html" class="px-4 py-2 rounded-xl border" style="border-color:var(--accent);">Voltar ao site</a>
+        <button id="btnExportar" class="px-4 py-2 rounded-xl btn-brand">Exportar PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo -->
+  <main class="container mx-auto px-4 py-8 relative">
+    <div id="watermark"><span>Gerado por Pedro Juca — Assessoria de Investimentos</span></div>
+
+    <div class="mb-6">
+      <h1 class="text-2xl md:text-3xl font-semibold">Questionário de Suitability</h1>
+      <p class="text-[var(--muted)] mt-2">Responda com tranquilidade. Suas respostas ajudam a definir seu perfil de investidor e a adequação das recomendações.</p>
+    </div>
+
+    <!-- Dados do cliente -->
+    <div class="card p-5 mb-6">
+      <h2 class="font-semibold mb-3">Identificação</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm text-[var(--muted)]">Nome completo</label>
+          <input id="cliNome" class="w-full mt-1 p-2 border rounded" style="border-color:var(--line);" placeholder="Digite seu nome">
+        </div>
+        <div>
+          <label class="block text-sm text-[var(--muted)]">E-mail</label>
+          <input id="cliEmail" type="email" class="w-full mt-1 p-2 border rounded" style="border-color:var(--line);" placeholder="nome@email.com">
+        </div>
+        <div>
+          <label class="block text-sm text-[var(--muted)]">Data</label>
+          <input id="cliData" type="date" class="w-full mt-1 p-2 border rounded" style="border-color:var(--line);">
+        </div>
+      </div>
+    </div>
+
+    <!-- Questionário -->
+    <form id="formSuitability" class="card p-6 md:p-8">
+      <ol id="listaPerguntas" class="space-y-6">
+        <!-- 12 perguntas-chave (resposta livre) -->
+        <li>
+          <label class="font-medium">1) Objetivo principal com os investimentos (ex.: reserva, aposentadoria, renda, aquisição específica)?</label>
+          <textarea name="q1" class="w-full mt-2 p-3 border rounded" style="border-color:var(--line);" rows="3" placeholder="Descreva..."></textarea>
+        </li>
+        <li>
+          <label class="font-medium">2) Horizonte de investimento (em quanto tempo pretende usar o dinheiro)?</label>
+          <textarea name="q2" class="w-full mt-2 p-3 border rounded" style="border-color:var(--line);" rows="2" placeholder="Meses/anos e justificativa"></textarea>
+        </li>
+        <li>
+          <label class="font-medium">3) Situação de renda e estabilidade (emprego, negócio próprio, variável, dependentes)?</label>
+          <textarea name="q3" class="w-full mt-2 p-3 border rounded" style="border-color:var(--line);" rows="3"></textarea>
+        </li>
+        <li>
+          <label class="font-medium">4) Reserva de emergência atual (em meses de despesas) e liquidez disponível?</label>
+          <textarea name="q4" class="w-full mt-2 p-3 border rounded" style="border-color:var(--line);" rows="2"></textarea>
+        </li>
+        <li>
+          <label class="font-medium">5) Conhecimento financeiro/investimentos (iniciante, intermediário, avançado) e experiências anteriores?</label>
+          <textarea name="q5" class="w-full mt-2 p-3 border rounded" style="border-color:var(--line);" rows="3"></textarea>
+        </li>
+        <li>
+          <label class="font-medium">6) Experiência com produtos (CDB/LCI/LCA, Tesouro, fundos, ações/ETFs, multimercado, previdência, cripto etc.)?</label>
+          <textarea name="q6" class="w-full mt-2 p-3 border rounded" style="border-color:var(--line);" rows="3"></textarea>
+        </li>
+        <li>
+          <label class="font-medium">7) Tolerância a oscilações: qual queda temporária aceitaria sem resgatar (ex.: −5%, −10%, −20%)?</label>
+          <textarea name="q7" class="w-full mt-2 p-3 border rounded" style="border-color:var(--line);" rows="2"></textarea>
+        </li>
+        <li>
+          <label class="font-medium">8) Necessidades de liquidez: há datas/compromissos que exigem resgate parcial no curto/médio prazo?</label>
+          <textarea name="q8" class="w-full mt-2 p-3 border rounded" style="border-color:var(--line);" rows="2"></textarea>
+        </li>
+        <li>
+          <label class="font-medium">9) Preferências/limitações tributárias (isentos, previdência, planejamento sucessório, regime de tributação preferido)?</label>
+          <textarea name="q9" class="w-full mt-2 p-3 border rounded" style="border-color:var(--line);" rows="3"></textarea>
+        </li>
+        <li>
+          <label class="font-medium">10) Exposição a moedas/externo: tem interesse/tolerância a dólar/euro/ativos no exterior?</label>
+          <textarea name="q10" class="w-full mt-2 p-3 border rounded" style="border-color:var(--line);" rows="2"></textarea>
+        </li>
+        <li>
+          <label class="font-medium">11) Comportamento em crises anteriores (vendeu, manteve, comprou mais)?</label>
+          <textarea name="q11" class="w-full mt-2 p-3 border rounded" style="border-color:var(--line);" rows="2"></textarea>
+        </li>
+        <li>
+          <label class="font-medium">12) Restrições pessoais (ESG, setores, produtos que não deseja; alavancagem; derivativos)?</label>
+          <textarea name="q12" class="w-full mt-2 p-3 border rounded" style="border-color:var(--line);" rows="2"></textarea>
+        </li>
+      </ol>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <button type="button" id="btnSalvar" class="px-4 py-2 rounded-xl border" style="border-color:var(--accent);">Salvar rascunho</button>
+        <button type="button" id="btnLimpar" class="px-4 py-2 rounded-xl border" style="border-color:var(--accent);">Limpar</button>
+        <button type="button" id="btnExportar2" class="px-4 py-2 rounded-xl btn-brand">Exportar PDF</button>
+      </div>
+    </form>
+
+    <p class="text-xs text-[var(--muted)] mt-4">As respostas são utilizadas exclusivamente para fins de adequação do perfil do investidor, conforme boas práticas de suitability.</p>
+  </main>
+
+  <script>
+    const form = document.getElementById('formSuitability');
+    const btnExportarTop = document.getElementById('btnExportar');
+    const btnExportar2 = document.getElementById('btnExportar2');
+    const btnSalvar = document.getElementById('btnSalvar');
+    const btnLimpar = document.getElementById('btnLimpar');
+    const watermark = document.getElementById('watermark');
+    const storageKey = 'suitability_respostas_v1';
+
+    // Pré-preencher data
+    const cliData = document.getElementById('cliData');
+    if (!cliData.value) {
+      const hoje = new Date();
+      cliData.value = hoje.toISOString().slice(0,10);
+    }
+
+    // Salvar/Restaurar rascunho
+    function salvar(){
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.cliNome = document.getElementById('cliNome').value || '';
+      data.cliEmail = document.getElementById('cliEmail').value || '';
+      data.cliData = document.getElementById('cliData').value || '';
+      try { localStorage.setItem(storageKey, JSON.stringify(data)); } catch(e){}
+    }
+    function restaurar(){
+      try{
+        const raw = localStorage.getItem(storageKey);
+        if(!raw) return;
+        const data = JSON.parse(raw);
+        document.getElementById('cliNome').value  = data.cliNome || '';
+        document.getElementById('cliEmail').value = data.cliEmail || '';
+        document.getElementById('cliData').value  = data.cliData || cliData.value;
+
+        for (const [key, val] of Object.entries(data)){
+          if(key.startsWith('q')) {
+            const el = form.querySelector(`[name="${key}"]`);
+            if(el) el.value = val;
+          }
+        }
+      }catch(e){}
+    }
+    function limpar(){
+      form.reset();
+      document.getElementById('cliNome').value = '';
+      document.getElementById('cliEmail').value = '';
+      document.getElementById('cliData').value = new Date().toISOString().slice(0,10);
+      try{ localStorage.removeItem(storageKey); }catch(e){}
+    }
+    restaurar();
+
+    // Auto-save leve
+    form.addEventListener('input', () => { salvar(); });
+
+    btnSalvar.addEventListener('click', () => { salvar(); alert('Rascunho salvo neste dispositivo.'); });
+    btnLimpar.addEventListener('click', () => {
+      if(confirm('Deseja limpar o formulário e apagar o rascunho salvo?')) limpar();
+    });
+
+    // Exportar PDF (topo e base usam a mesma função)
+    async function exportarPDF(){
+      const area = document.querySelector('main');
+      watermark.style.display = 'flex';
+      const canvas = await html2canvas(area, { scale: 2, backgroundColor: '#ffffff' });
+      watermark.style.display = 'none';
+
+      const img = canvas.toDataURL('image/jpeg', 0.92);
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ orientation:'portrait', unit:'pt', format:'a4' });
+
+      // Título
+      pdf.setFont('helvetica','bold'); pdf.setFontSize(14);
+      pdf.text('Questionário de Suitability — Pedro Juca', 56, 40);
+
+      // Centraliza imagem na página com margens
+      const pageW = pdf.internal.pageSize.getWidth();
+      const pageH = pdf.internal.pageSize.getHeight();
+      const maxW = pageW - 56*2; // margens
+      const imgH = maxW * (canvas.height/canvas.width);
+      let y = 56;
+      if(imgH > pageH - 112){
+        // várias páginas
+        let sX = 0, sY = 0, sH = canvas.height, sW = canvas.width;
+        const pageImgH = pageH - 112;
+        const ratio = maxW / canvas.width;
+        const pageCanvasHeight = pageImgH / ratio;
+        while(sY < canvas.height){
+          const pageCanvas = document.createElement('canvas');
+          pageCanvas.width = canvas.width;
+          pageCanvas.height = Math.min(pageCanvasHeight, canvas.height - sY);
+          const ctx = pageCanvas.getContext('2d');
+          ctx.drawImage(canvas, 0, sY, sW, pageCanvas.height, 0, 0, sW, pageCanvas.height);
+          const pageImg = pageCanvas.toDataURL('image/jpeg', 0.92);
+          if(y !== 56) pdf.addPage();
+          pdf.addImage(pageImg, 'JPEG', 56, 56, maxW, pageCanvas.height * ratio);
+          sY += pageCanvasHeight;
+        }
+      }else{
+        pdf.addImage(img, 'JPEG', 56, y, maxW, imgH);
+      }
+
+      pdf.setFontSize(9); pdf.setTextColor(120);
+      pdf.text('Gerado por Pedro Juca — Assessoria de Investimentos', 56, pageH - 36);
+
+      const nome = (document.getElementById('cliNome').value || 'investidor').replace(/\s+/g,'-').toLowerCase();
+      pdf.save(`questionario-suitability-${nome}.pdf`);
+    }
+
+    btnExportarTop.addEventListener('click', exportarPDF);
+    btnExportar2.addEventListener('click', exportarPDF);
+  </script>
+</body>
+</html>
