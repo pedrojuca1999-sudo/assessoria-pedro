@@ -7,7 +7,8 @@
   <title>Pedro Juca — Assessoria de Investimentos</title>
   <meta name="description" content="Planejamento financeiro pessoal e familiar com transparência e método. Atuação por meio de escritório parceiro.">
 
-  <link rel="icon" type="image/png" href="assets/logo-avin.png" />
+  <!-- Favicon com a nova logo (.avif) -->
+  <link rel="icon" type="image/avif" href="assets/logo-avin.avif" />
 
   <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -21,48 +22,72 @@
     html { scroll-behavior: smooth; }
     .container { max-width: 1120px; }
 
+    /* ================== PALETA AVIN (ajuste fino aqui, se desejar) ==================
+       Tons inspirados no site novo (visual corporativo com navy + ciano).
+       Dica: se você extrair valores exatos depois, basta trocar abaixo. */
     :root{
-      --brand:#32a9cc; --brand-600:#0d2c35; --accent:#94d2e4;
-      --text:#0d2c35; --muted:#6d7a8d; --line:#bcc4cc;
-      --bg:#ffffff; --surface:#f6fbfd;
-      --red-soft:#ef9a9a; --teal:#2ea3af; --purple:#6f6cc2;
+      --brand:#0b2436;       /* navy principal */
+      --brand-600:#071724;   /* navy mais escuro (hover) */
+      --accent:#19b3c8;      /* ciano/acento */
+      --accent-100:#e6f7fa;  /* ciano clarinho p/ superfícies */
+      --text:#0b2436;        /* cor do texto principal */
+      --muted:#6b7a88;       /* cinza-azulado */
+      --line:#d7e3ea;        /* linhas/bordas suaves */
+      --bg:#ffffff;          /* fundo */
+      --surface:#f6fafc;     /* seção com leve contraste */
+
+      /* Cores auxiliares do simulador */
+      --red-soft:#ef9a9a;    /* IPCA */
+      --teal:#2ea3af;        /* Poupança */
+      --purple:#6f6cc2;      /* CDI */
     }
 
-    .btn-brand{ background:var(--brand); color:#fff; }
-    .btn-brand:hover{ background:var(--brand-600); }
-    .link-brand:hover{ color:var(--brand); }
-    .card{ background:#fff; border:1px solid var(--accent); border-radius:1rem; }
+    /* Estilo geral */
+    body{ background:var(--bg); color:var(--text); }
+    .btn-brand{ background:linear-gradient(90deg,var(--brand),var(--accent)); color:#fff; }
+    .btn-brand:hover{ filter:brightness(.95); }
+    .btn-outline{ border:1px solid var(--line); }
+    .link-brand{ color:inherit; }
+    .link-brand:hover{ color:var(--accent); }
+    .card{ background:#fff; border:1px solid var(--line); border-radius:1rem; }
     .btn-disabled{ opacity:.5; cursor:not-allowed; }
     input::placeholder{ color:#9aa6b2; }
 
     /* Compensa o header fixo ao rolar para anchors */
     section[id], header[id], footer[id] { scroll-margin-top: 88px; }
 
+    /* Hero com grade/gradiente sutil */
+    .hero-bg{
+      position:absolute; inset:-10% -10% auto auto; z-index:-1; opacity:.12;
+      background:
+        radial-gradient(600px 300px at 70% 20%, var(--accent) 0%, transparent 60%),
+        radial-gradient(400px 240px at 20% 60%, var(--brand) 0%, transparent 55%);
+      filter:saturate(0.9);
+      width:min(60vw,780px); height:min(60vw,520px); border-radius:32px;
+    }
+
     /* marca d’água no PDF (simulador) */
     #watermark {
-      position: absolute;
-      inset: 0;
-      display: none; /* aparece só na captura do PDF */
-      align-items: center; justify-content: center;
-      pointer-events: none;
+      position: absolute; inset: 0; display: none;
+      align-items: center; justify-content: center; pointer-events: none;
     }
     #watermark span{
       font: 700 32px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
-      color: rgba(13,44,53,.08);
+      color: rgba(7,23,36,.10);
       transform: rotate(-25deg);
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      letter-spacing: 2px; text-transform: uppercase;
     }
   </style>
 </head>
 
-<body class="antialiased text-[var(--text)] bg-[var(--bg)]">
+<body class="antialiased">
 
   <!-- Navbar -->
   <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b" style="border-color: var(--line);">
     <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
       <a href="#topo" class="flex items-center gap-3">
-        <img src="assets/logo-avin.png" alt="Logo do Escritório" class="h-8 w-auto">
+        <!-- nova logo .avif -->
+        <img src="assets/logo-avin.avif" alt="Logo AVIN" class="h-8 w-auto">
         <span class="font-semibold">Pedro Juca</span>
       </a>
       <ul class="hidden md:flex items-center gap-6 text-sm">
@@ -80,28 +105,25 @@
   </header>
 
   <!-- Hero -->
-  <section id="topo" class="relative">
-    <svg class="absolute -z-10 -top-10 -right-10 w-[42vw] max-w-[520px] opacity-10"
-         viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="color:var(--brand)">
-      <path d="M40 260 L140 40 L240 260 Z" fill="currentColor"/>
-    </svg>
+  <section id="topo" class="relative overflow-hidden">
+    <div class="hero-bg"></div>
 
     <div class="container mx-auto px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
       <div>
         <h1 class="text-3xl md:text-5xl font-bold leading-tight">
-          Planejamento financeiro claro, <span class="text-[var(--muted)]">com acompanhamento.</span>
+          Planejamento financeiro claro, <span style="color:var(--muted)">com acompanhamento.</span>
         </h1>
-        <p class="mt-4 text-[var(--muted)]">
+        <p class="mt-4" style="color:var(--muted)">
           Atendo pessoas e famílias na organização patrimonial e na construção de uma carteira
           adequada ao perfil e aos objetivos de vida. Atuação como Assessor de Investimentos
           por meio de escritório parceiro.
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a href="#contato" class="px-5 py-3 rounded-xl btn-brand">Começar agora</a>
-          <a href="#servicos" class="px-5 py-3 border rounded-xl" style="border-color:var(--accent);">Ver serviços</a>
-          <a href="pages/questionario.html" class="px-5 py-3 border rounded-xl" style="border-color:var(--accent);">Questionário</a>
+          <a href="#servicos" class="px-5 py-3 rounded-xl btn-outline">Ver serviços</a>
+          <a href="pages/questionario.html" class="px-5 py-3 rounded-xl btn-outline">Questionário</a>
         </div>
-        <p class="mt-3 text-xs text-[var(--muted)]">
+        <p class="mt-3 text-xs" style="color:var(--muted)">
           *Leia os <a href="pages/disclaimers.html" class="underline">disclaimers</a> e a
           <a href="pages/privacidade.html" class="underline">política de privacidade</a>.
         </p>
@@ -114,18 +136,18 @@
   </section>
 
   <!-- Sobre -->
-  <section id="sobre" class="bg-[var(--surface)]">
+  <section id="sobre" style="background:var(--surface)">
     <div class="container mx-auto px-4 py-14">
       <h2 class="text-2xl md:text-3xl font-semibold" style="color: var(--brand);">Quem sou</h2>
-      <p class="mt-4 text-[var(--muted)] max-w-3xl">
+      <p class="mt-4" style="color: var(--muted); max-width: 60ch;">
         Sou <strong>Pedro Juca</strong>, assessor de investimentos em Fortaleza-CE, com foco em
         planejamento financeiro pessoal e familiar. Atendo de forma consultiva, priorizando
         educação financeira, carteiras adequadas ao perfil e revisão contínua.
       </p>
       <ul class="mt-6 grid md:grid-cols-3 gap-4">
-        <li class="p-4 card">Atendimento consultivo 1:1</li>
-        <li class="p-4 card">Carteiras alinhadas ao perfil</li>
-        <li class="p-4 card">Revisões e acompanhamento</li>
+        <li class="p-5 card">Atendimento consultivo 1:1</li>
+        <li class="p-5 card">Carteiras alinhadas ao perfil</li>
+        <li class="p-5 card">Revisões e acompanhamento</li>
       </ul>
     </div>
   </section>
@@ -134,23 +156,23 @@
   <section id="servicos" class="container mx-auto px-4 py-14">
     <h2 class="text-2xl md:text-3xl font-semibold" style="color: var(--brand);">Como posso ajudar</h2>
     <div class="mt-6 grid md:grid-cols-3 gap-6">
-      <div class="p-6 card">
+      <div class="p-6 card hover:shadow-md transition">
         <h3 class="font-semibold">Diagnóstico & Plano</h3>
-        <p class="mt-2 text-[var(--muted)]">Mapeamento de objetivos, fluxo de caixa, reserva e alocação recomendada.</p>
+        <p class="mt-2" style="color:var(--muted)">Mapeamento de objetivos, fluxo de caixa, reserva e alocação recomendada.</p>
       </div>
-      <div class="p-6 card">
+      <div class="p-6 card hover:shadow-md transition">
         <h3 class="font-semibold">Implementação</h3>
-        <p class="mt-2 text-[var(--muted)]">Abertura/transferência, adequação de perfil e execução com método.</p>
+        <p class="mt-2" style="color:var(--muted)">Abertura/transferência, adequação de perfil e execução com método.</p>
       </div>
-      <div class="p-6 card">
+      <div class="p-6 card hover:shadow-md transition">
         <h3 class="font-semibold">Acompanhamento</h3>
-        <p class="mt-2 text-[var(--muted)]">Monitoramento, rebalanceamentos e revisões periódicas do plano.</p>
+        <p class="mt-2" style="color:var(--muted)">Monitoramento, rebalanceamentos e revisões periódicas do plano.</p>
       </div>
     </div>
   </section>
 
   <!-- Processo -->
-  <section id="processo" class="bg-[var(--surface)]">
+  <section id="processo" style="background:var(--surface)">
     <div class="container mx-auto px-4 py-14">
       <h2 class="text-2xl md:text-3xl font-semibold" style="color: var(--brand);">Meu processo em 4 etapas</h2>
       <ol class="mt-6 grid md:grid-cols-4 gap-6">
@@ -163,14 +185,14 @@
   </section>
 
   <!-- ====================== SIMULADOR (Etapas 1 e 2 no mesmo lugar) ====================== -->
-  <section id="simulador" class="bg-[var(--surface)] relative">
+  <section id="simulador" style="background:var(--surface)" class="relative">
     <div class="container mx-auto px-4 py-14" id="simuladorContainer">
 
       <!-- Cabeçalho de etapas -->
       <div class="mb-6">
         <p id="etapaRotulo" class="text-sm font-medium" style="color: var(--muted);">Etapa 1 de 3</p>
-        <div class="mt-2 h-1.5 bg-[var(--line)] rounded">
-          <div id="etapaBarra" class="h-1.5 rounded" style="width: 33%; background: var(--brand);"></div>
+        <div class="mt-2 h-1.5 rounded" style="background: var(--line);">
+          <div id="etapaBarra" class="h-1.5 rounded" style="width: 33%; background: linear-gradient(90deg,var(--brand),var(--accent));"></div>
         </div>
       </div>
 
@@ -207,7 +229,7 @@
             <span id="rotuloDuracao" class="text-base md:text-lg font-medium">6 meses</span>
           </div>
 
-        <div class="mt-4">
+          <div class="mt-4">
             <input id="sliderDuracao" type="range" min="0" max="30" step="1" class="w-full"
                    aria-label="Duração do investimento (0 = 6 meses, 1..30 = anos)">
             <div class="mt-2 text-xs" style="color: var(--muted);">
@@ -217,8 +239,8 @@
         </div>
 
         <div class="mt-10 flex items-center justify-between">
-          <button type="button" id="btnVoltar" class="px-5 py-2.5 rounded-xl border"
-                  style="border-color: var(--accent); color: var(--text);">Voltar</button>
+          <button type="button" id="btnVoltar" class="px-5 py-2.5 rounded-xl btn-outline"
+                  style="color: var(--text);">Voltar</button>
 
           <button type="button" id="btnAvancar" class="px-6 py-3 rounded-xl btn-brand btn-disabled" disabled>
             Avançar
@@ -237,14 +259,14 @@
         <div class="flex items-center justify-between gap-4 mb-4">
           <h3 class="text-xl md:text-2xl font-semibold" style="color: var(--brand);">Resultado da simulação</h3>
           <div class="flex gap-2">
-            <button id="btnEditar" class="px-4 py-2 rounded-xl border" style="border-color: var(--accent);">Editar valores</button>
+            <button id="btnEditar" class="px-4 py-2 rounded-xl btn-outline">Editar valores</button>
             <button id="btnExportarPDF" class="px-4 py-2 rounded-xl btn-brand">Exportar PDF</button>
           </div>
         </div>
 
         <div class="grid lg:grid-cols-3 gap-6 items-stretch" id="areaExportavel">
           <!-- Gráfico -->
-          <div class="lg:col-span-2 p-4 md:p-6 rounded-xl" style="background:#f3f5f7;">
+          <div class="lg:col-span-2 p-4 md:p-6 rounded-xl" style="background:var(--accent-100);">
             <canvas id="graficoSimulacao" height="260"></canvas>
           </div>
 
@@ -292,10 +314,10 @@
       <div class="mt-6 flex flex-wrap gap-3">
         <a href="mailto:pedrojucaclima@hotmail.com" class="px-5 py-3 rounded-xl btn-brand">Enviar e-mail</a>
         <a href="https://wa.me/5585981230606" target="_blank" rel="noreferrer"
-           class="px-5 py-3 border rounded-xl" style="border-color: var(--accent);">WhatsApp: (85) 98123-0606</a>
+           class="px-5 py-3 rounded-xl btn-outline">WhatsApp: (85) 98123-0606</a>
         <a href="https://www.linkedin.com/in/pedrojuca/" target="_blank" rel="noreferrer"
-           class="px-5 py-3 border rounded-xl" style="border-color: var(--accent);">LinkedIn</a>
-        <a href="pages/disclaimers.html" class="px-5 py-3 border rounded-xl" style="border-color: var(--accent);">Disclaimers</a>
+           class="px-5 py-3 rounded-xl btn-outline">LinkedIn</a>
+        <a href="pages/disclaimers.html" class="px-5 py-3 rounded-xl btn-outline">Disclaimers</a>
       </div>
     </div>
   </section>
@@ -309,10 +331,10 @@
   </footer>
 
   <script>
-    // ======== RESET AUTOMÁTICO AO ABRIR ========
+    // ======= RESET AUTOMÁTICO AO ABRIR =======
     try { localStorage.removeItem('simulacaoStep1'); } catch(e) {}
 
-    // ======== Utilitários ========
+    // ======= Utilitários =======
     document.getElementById('ano').textContent = new Date().getFullYear();
     const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
@@ -369,7 +391,7 @@
     function irParaEtapa2(){ etapaRotulo.textContent='Etapa 2 de 3'; etapaBarra.style.width='66%'; cardEtapa1.classList.add('hidden'); cardEtapa2.classList.remove('hidden'); document.getElementById('simulador').scrollIntoView({behavior:'smooth'}); }
     function voltarParaEtapa1(){ etapaRotulo.textContent='Etapa 1 de 3'; etapaBarra.style.width='33%'; cardEtapa2.classList.add('hidden'); cardEtapa1.classList.remove('hidden'); document.getElementById('simulador').scrollIntoView({behavior:'smooth'}); }
 
-    // Reset ao clicar "Simulador" no menu (garante voltar ao formulário)
+    // Reset ao clicar "Simulador" no menu
     const linkSimulador = document.querySelector('a[href="#simulador"]');
     if (linkSimulador) {
       linkSimulador.addEventListener('click', () => {
@@ -380,7 +402,7 @@
 
     if(btnEditar){ btnEditar.addEventListener('click', voltarParaEtapa1); }
 
-    // ======== Taxas (APIs BCB) ========
+    // ======= Taxas (APIs BCB) =======
     const FALLBACKS = {
       SELIC_AA: 10.25,  // % a.a.
       CDI_AA:   null,   // se null, usa SELIC_AA
@@ -399,53 +421,28 @@
     }
 
     async function buscarSelicAA(){ try{ return await fetchSGS(432); } catch(e){ console.warn('SELIC fallback', e); return FALLBACKS.SELIC_AA; } }
-    // CDI público com CORS amigável é raro; usamos fallback=SELIC
-    async function buscarCDIAA(){
-      try{
-        if(FALLBACKS.CDI_AA !== null) return FALLBACKS.CDI_AA;
-        return await buscarSelicAA();
-      }catch(e){ return await buscarSelicAA(); }
-    }
-    // TR mensal (SGS 226)
+    async function buscarCDIAA(){ try{ if(FALLBACKS.CDI_AA !== null) return FALLBACKS.CDI_AA; return await buscarSelicAA(); } catch(e){ return await buscarSelicAA(); } }
     async function buscarTRam(){ try{ return await fetchSGS(226); } catch(e){ console.warn('TR fallback', e); return FALLBACKS.TR_AM; } }
-    // IPCA expectativa 12m à frente (SGS 13522 - Focus)
     async function buscarIPCAA(){ try{ return await fetchSGS(13522); } catch(e){ console.warn('IPCA fallback', e); return FALLBACKS.IPCA_AA; } }
 
-    // conversões
     function taxaMensalDeAnual(pctAA){ const r = (pctAA||0)/100; return Math.pow(1+r, 1/12) - 1; }
-
-    // regra da Poupança (nova)
     function taxaPoupancaMensal(selicaa, tram){
-      if(selicaa > 8.5){ // 0,5% a.m. + TR
-        return 0.005 + (tram||0)/100;
-      }else{
-        return 0.70 * taxaMensalDeAnual(selicaa) + (tram||0)/100;
-      }
+      if(selicaa > 8.5){ return 0.005 + (tram||0)/100; }
+      else{ return 0.70 * taxaMensalDeAnual(selicaa) + (tram||0)/100; }
     }
 
-    // simulação mês a mês (com aportes no fim do mês)
     function simularSerie(iniCent, menCent, meses, taxaMensal){
-      const serie = [];
-      let saldo = iniCent;
-      for(let m=1; m<=meses; m++){
-        saldo = Math.round(saldo * (1 + taxaMensal));
-        saldo += menCent;
-        serie.push(saldo);
-      }
+      const serie = []; let saldo = iniCent;
+      for(let m=1; m<=meses; m++){ saldo = Math.round(saldo * (1 + taxaMensal)); saldo += menCent; serie.push(saldo); }
       return serie;
     }
 
-    // labels simples (ano)
     function gerarLabelsMeses(meses){
       const hoje = new Date(); const labels = [];
-      for(let i=1;i<=meses;i++){
-        const d = new Date(hoje.getFullYear(), hoje.getMonth()+i, 1);
-        labels.push(d.getFullYear().toString());
-      }
+      for(let i=1;i<=meses;i++){ const d = new Date(hoje.getFullYear(), hoje.getMonth()+i, 1); labels.push(d.getFullYear().toString()); }
       return labels;
     }
 
-    // gráfico
     let chart;
     function desenharGrafico(labels, esperado, cdi, poup, ipca){
       const ctx = document.getElementById('graficoSimulacao').getContext('2d');
@@ -473,9 +470,7 @@
           maintainAspectRatio: false,
           scales: {
             y: {
-              ticks: {
-                callback: (val)=> (val>=1000 ? Math.round(val/1000)+' mil' : BRL.format(val).replace('R$','').trim())
-              },
+              ticks: { callback: (val)=> (val>=1000 ? Math.round(val/1000)+' mil' : BRL.format(val).replace('R$','').trim()) },
               grid: { color: 'rgba(0,0,0,.06)' }
             },
             x: { grid: { display:false }, ticks: { maxRotation:0, autoSkip:true, maxTicksLimit:7 } }
@@ -488,7 +483,6 @@
       });
     }
 
-    // Render da etapa 2
     async function calcularEExibirResultado(iniCent, menCent, meses){
       const [selicAA, cdiAA, trAM, ipcaAA] = await Promise.all([buscarSelicAA(), buscarCDIAA(), buscarTRam(), buscarIPCAA()]);
       const txSelicM = taxaMensalDeAnual(selicAA);
@@ -504,7 +498,6 @@
       const labels = gerarLabelsMeses(meses);
       desenharGrafico(labels, serieSelic, serieCDI, seriePoup, serieIPCA);
 
-      // Painel lateral
       const prazoTexto = (meses===6 ? '6 meses' : (meses===12 ? '1 ano' : (meses%12===0 ? (meses/12)+' anos' : meses+' meses')));
       document.getElementById('resPrazo').textContent = prazoTexto;
       document.getElementById('resInicial').textContent = BRL.format(iniCent/100);
@@ -540,7 +533,7 @@
       btnExportar.addEventListener('click', async ()=>{
         const area = document.getElementById('areaExportavel');
         const wm   = document.getElementById('watermark');
-        wm.style.display = 'flex';  // mostra marca d'água só na captura
+        wm.style.display = 'flex';
         const canvas = await html2canvas(area, { scale: 2, backgroundColor: '#ffffff' });
         wm.style.display = 'none';
 
@@ -550,7 +543,7 @@
 
         const pageW = pdf.internal.pageSize.getWidth();
         const pageH = pdf.internal.pageSize.getHeight();
-        const imgW = pageW - 72*2;  // margens 1"
+        const imgW = pageW - 72*2;
         const imgH = imgW * (canvas.height/canvas.width);
         const x = 72, y = (pageH - imgH)/2;
 
